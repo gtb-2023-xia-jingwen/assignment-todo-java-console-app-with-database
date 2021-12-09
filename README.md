@@ -31,7 +31,12 @@
    1. 所需的数据库表结构，请自行设计及创建；
    1. 数据库的连接方式可参考 `homework-jdbc-answer` 的实现；
 1. 不可以使用任何方式的网络通讯；
-
+1. 数据库连接信息：
+   1. **username**: root
+   1. **password** : p@ssword
+   1. **database** : todoapp
+   1. **host** : localhost
+   1. **port** : 13306
 1. 使用 Git 进行版本管理：
    1. 小步提交；
    1. 使用合理的 commit message；
