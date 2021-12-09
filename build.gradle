@@ -6,11 +6,14 @@ repositories {
     mavenCentral()
 }
 
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
 dependencies {
     implementation 'com.google.guava:guava:30.0-jre'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.22'
 }
 
 application {
-    mainClass = 'tw.cn.cap.gtb.todo.App'
+    mainClass = 'tw.cn.cap.gtb.todo.TodoApp'
 }
-
