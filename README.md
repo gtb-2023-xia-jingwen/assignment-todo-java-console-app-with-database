@@ -61,11 +61,11 @@ Assignment 的目的是学以致用，在运用当前 step 所学的知识和技
 1. 使用 CLI git 完成本地的提交管理及与远端的各种同步操作；
 1. 使用 SQL 完成如下基础操作：
    1. 数据的增删改查；
-   1. 数据表的创建，这里是 [参考](https://www.liaoxuefeng.com/wiki/1177760294764384/1246617774585536)；
+   1. 数据表的创建，这里是 [参考](https://www.liaoxuefeng.com/wiki/1177760294764384/1246617774585536) ；
    1. 数据表的数据清理；
 1. 使用 JDBC 连接并操作 MySQL 数据库：
    1. 使用 try-with-resource 语法自动释放 JDBC 数据库连接相关资源
-   1. 判断表是否存在，这里是 [参考](https://www.baeldung.com/jdbc-check-table-exists)；
+   1. 判断表是否存在，这里是 [参考](https://www.baeldung.com/jdbc-check-table-exists) ；
 1. 使用 Stream API 完成元素集合的处理
    1. skip、map、collect 等操作符的使用
 1. 通过 Gradle 在 console 里运行一个 Java Application；
