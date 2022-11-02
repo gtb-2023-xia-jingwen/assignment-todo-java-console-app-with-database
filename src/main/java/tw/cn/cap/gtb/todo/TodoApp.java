@@ -70,7 +70,7 @@ public class TodoApp {
     }
 
     private void remove(List<Integer> numbers) throws SQLException {
-        String removeSql = "UPDATE `tasks` SET `status`=2 WHERE `id`=?;";
+        String removeSql = "UPDATE `tasks` SET `status`=2 WHERE `id`=? and `status`!=2;";
         try (Connection conn = getConnection();
              PreparedStatement preStat = conn.prepareStatement(removeSql)) {
             for (Integer id : numbers) {
@@ -81,7 +81,7 @@ public class TodoApp {
     }
 
     private void mark(List<Integer> numbers) throws SQLException {
-        String markSql = "UPDATE `tasks` SET `status`=1 WHERE `id`=?;";
+        String markSql = "UPDATE `tasks` SET `status`=1 WHERE `id`=? and `status`=0;";
         try (Connection conn = getConnection();
              PreparedStatement preStat = conn.prepareStatement(markSql)) {
             for (Integer id : numbers) {
