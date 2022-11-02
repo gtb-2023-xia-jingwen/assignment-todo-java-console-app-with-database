@@ -8,24 +8,24 @@ import java.sql.SQLException;
 public class TodoApp {
     public static void main(String[] args) throws SQLException {
         if (args.length == 0) return;
+        TodoApp todoApp = new TodoApp();
 
         String cmd = args[0];
         // 1. init
         if ("init".equals(cmd)) {
-            String createSql = "CREATE TABLE IF NOT EXISTS `tasks`\n" +
-                    "(\n" +
-                    "    `id`     INT AUTO_INCREMENT PRIMARY KEY,\n" +
-                    "    `title`  VARCHAR(255) NOT NULL,\n" +
-                    "    `status` INT NOT NULL DEFAULT 0\n" +
-                    ");";
-            String url = "jdbc:mysql://localhost:13306/todoapp";
-            String username = "root";
-            String password = "p@ssword";
-            Connection conn = DriverManager.getConnection(url, username, password);
-            PreparedStatement preStat = conn.prepareStatement(createSql);
-            preStat.executeUpdate();
-            System.out.println("Initialized successfully.");
+            String createSql = "CREATE TABLE IF NOT EXISTS `tasks`\n" + "(\n" + "    `id`     INT AUTO_INCREMENT PRIMARY KEY,\n" + "    `title`  VARCHAR(255) NOT NULL,\n" + "    `status` INT NOT NULL DEFAULT 0\n" + ");";
+            try (Connection conn = todoApp.getConnection();
+                 PreparedStatement preStat = conn.prepareStatement(createSql)) {
+                preStat.executeUpdate();
+                System.out.println("Initialized successfully.");
+            }
+            return;
         }
+
+        // check if `tasks` table exist
+        String querySql = "SELECT * FROM `tasks`";
+
+
         // 2. list
 
         // 3. add
@@ -33,5 +33,12 @@ public class TodoApp {
         // 4. mark
 
         // 5. remove
+    }
+
+    private Connection getConnection() throws SQLException {
+        final String url = "jdbc:mysql://localhost:13306/todoapp";
+        final String username = "root";
+        final String password = "p@ssword";
+        return DriverManager.getConnection(url, username, password);
     }
 }
