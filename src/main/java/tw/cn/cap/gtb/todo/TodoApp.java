@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TodoApp {
     public static void main(String[] args) throws SQLException {
@@ -34,12 +35,47 @@ public class TodoApp {
         }
 
         // 2. list
+        if ("list".equals(cmd)) {
+            todoApp.list();
+        }
 
         // 3. add
 
         // 4. mark
 
         // 5. remove
+    }
+
+    private void list() throws SQLException {
+        String listSql = "SELECT * FROM `tasks`;";
+        try (Connection conn = getConnection();
+             ResultSet rs = conn.createStatement().executeQuery(listSql)) {
+            ArrayList<String> tbdList = new ArrayList<>();
+            ArrayList<String> doneList = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                int status = rs.getInt("status");
+                if (status == 0) {
+                    tbdList.add(id + " " + title);
+                }
+                if (status == 1) {
+                    doneList.add(id + " " + title);
+                }
+            }
+            System.out.println("# To be done");
+            if (!tbdList.isEmpty()) {
+                tbdList.forEach(System.out::println);
+            } else {
+                System.out.println("Empty");
+            }
+            System.out.println("# Completed");
+            if (!doneList.isEmpty()) {
+                doneList.forEach(System.out::println);
+            } else {
+                System.out.println("Empty");
+            }
+        }
     }
 
     private Connection getConnection() throws SQLException {
