@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class TodoApp {
     public static void main(String[] args) throws SQLException {
@@ -34,16 +36,29 @@ public class TodoApp {
             }
         }
 
-        // 2. list
         if ("list".equals(cmd)) {
+            // 2. list
             todoApp.list();
+        }else if ("add".equals(cmd)) {
+            // 3. add
+            String title = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
+            todoApp.add(title);
+        }else {
+            // 4. mark
+
+            // 5. remove
         }
 
-        // 3. add
 
-        // 4. mark
+    }
 
-        // 5. remove
+    private void add(String title) throws SQLException {
+        String addSql = "INSERT INTO `tasks`(`title`) VALUES (?)";
+        try (Connection conn = getConnection();
+             PreparedStatement preStat = conn.prepareStatement(addSql)) {
+            preStat.setString(1, title);
+            preStat.executeUpdate();
+        }
     }
 
     private void list() throws SQLException {
