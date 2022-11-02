@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class TodoApp {
@@ -59,6 +58,7 @@ public class TodoApp {
                 break;
         }
     }
+
     public static boolean checkIsNumber(String s) {
         boolean res = true;
         try {
