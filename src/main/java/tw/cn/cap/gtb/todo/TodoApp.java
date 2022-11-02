@@ -53,8 +53,10 @@ public class TodoApp {
                 todoApp.mark(numbers);
             }
             // 5. remove
+            if ("remove".equals(cmd)) {
+                todoApp.remove(numbers);
+            }
         }
-
 
     }
     public static boolean checkIsNumber(String s) {
@@ -65,6 +67,17 @@ public class TodoApp {
             res = false;
         }
         return res;
+    }
+
+    private void remove(List<Integer> numbers) throws SQLException {
+        String removeSql = "UPDATE `tasks` SET `status`=2 WHERE `id`=?;";
+        try (Connection conn = getConnection();
+             PreparedStatement preStat = conn.prepareStatement(removeSql)) {
+            for (Integer id : numbers) {
+                preStat.setInt(1, id);
+                preStat.executeUpdate();
+            }
+        }
     }
 
     private void mark(List<Integer> numbers) throws SQLException {
