@@ -38,26 +38,26 @@ public class TodoApp {
             }
         }
 
-        if ("list".equals(cmd)) {
-            // 2. list
-            todoApp.list();
-        }else if ("add".equals(cmd)) {
-            // 3. add
-            String title = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
-            todoApp.add(title);
-        }else {
-            // 4. mark
-            List<Integer> numbers = Arrays.stream(args).skip(1).filter(TodoApp::checkIsNumber).
-                    map(Integer::parseInt).collect(Collectors.toList());
-            if ("mark".equals(cmd)) {
-                todoApp.mark(numbers);
-            }
-            // 5. remove
-            if ("remove".equals(cmd)) {
-                todoApp.remove(numbers);
-            }
+        switch (cmd) {
+            case "list":
+                todoApp.list();
+                break;
+            case "add":
+                String title = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
+                todoApp.add(title);
+                break;
+            case "mark":
+            case "remove":
+                List<Integer> numbers = Arrays.stream(args).skip(1).filter(TodoApp::checkIsNumber).
+                        map(Integer::parseInt).collect(Collectors.toList());
+                if ("mark".equals(cmd)) {
+                    todoApp.mark(numbers);
+                }
+                if ("remove".equals(cmd)) {
+                    todoApp.remove(numbers);
+                }
+                break;
         }
-
     }
     public static boolean checkIsNumber(String s) {
         boolean res = true;
