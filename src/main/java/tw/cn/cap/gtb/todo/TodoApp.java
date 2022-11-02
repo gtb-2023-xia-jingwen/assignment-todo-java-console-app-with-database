@@ -3,6 +3,7 @@ package tw.cn.cap.gtb.todo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TodoApp {
@@ -23,8 +24,14 @@ public class TodoApp {
         }
 
         // check if `tasks` table exist
-        String querySql = "SELECT * FROM `tasks`";
-
+        String querySql = "SHOW TABLES LIKE 'tasks';";
+        try (Connection conn = todoApp.getConnection();
+             ResultSet rs = conn.createStatement().executeQuery(querySql)) {
+            if (!rs.next()) {
+                System.out.printf("Please run 'todo init' before running '%s' command.\n", cmd);
+                return;
+            }
+        }
 
         // 2. list
 
