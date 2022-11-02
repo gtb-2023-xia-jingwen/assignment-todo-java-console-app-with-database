@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class TodoApp {
@@ -45,11 +47,35 @@ public class TodoApp {
             todoApp.add(title);
         }else {
             // 4. mark
-
+            List<Integer> numbers = Arrays.stream(args).skip(1).filter(TodoApp::checkIsNumber).
+                    map(Integer::parseInt).collect(Collectors.toList());
+            if ("mark".equals(cmd)) {
+                todoApp.mark(numbers);
+            }
             // 5. remove
         }
 
 
+    }
+    public static boolean checkIsNumber(String s) {
+        boolean res = true;
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            res = false;
+        }
+        return res;
+    }
+
+    private void mark(List<Integer> numbers) throws SQLException {
+        String markSql = "UPDATE `tasks` SET `status`=1 WHERE `id`=?;";
+        try (Connection conn = getConnection();
+             PreparedStatement preStat = conn.prepareStatement(markSql)) {
+            for (Integer id : numbers) {
+                preStat.setInt(1, id);
+                preStat.executeUpdate();
+            }
+        }
     }
 
     private void add(String title) throws SQLException {
